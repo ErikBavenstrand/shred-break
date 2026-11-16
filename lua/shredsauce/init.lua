@@ -11,6 +11,8 @@ M.config = {
   width = 1280, -- window size in pixels
   height = 800,
   devtools_port = 9339, -- localhost port the plugin uses to set up the game-only view
+  decline_cookies = true, -- answer the cookie dialog with only essential cookies
+  auto_play = true, -- press Play as soon as the page is ready
   profile = vim.fs.joinpath(vim.fn.stdpath("data"), "shredsauce-browser"), -- keeps cookies
 }
 
@@ -42,7 +44,18 @@ local function find_browser()
 end
 
 local function inject_game_only()
-  local js = table.concat(vim.fn.readfile(plugin_file("game_only.js")), "\n")
+  local files = { "game_only.js" }
+  if M.config.decline_cookies then
+    table.insert(files, "decline_cookies.js")
+  end
+  if M.config.auto_play then
+    table.insert(files, "auto_play.js")
+  end
+  local parts = {}
+  for _, f in ipairs(files) do
+    table.insert(parts, table.concat(vim.fn.readfile(plugin_file(f)), "\n"))
+  end
+  local js = table.concat(parts, "\n")
   local apply = { { method = "Runtime.evaluate", params = { expression = js } } }
   cdp.run(M.config.devtools_port, "shredsauce.com", {
     -- For later loads (reloads, in-game level links).
@@ -81,6 +94,7 @@ local function start()
     "--remote-debugging-port=" .. M.config.devtools_port,
     "--window-size=" .. M.config.width .. "," .. M.config.height,
     "--no-first-run", "--no-default-browser-check",
+    "--autoplay-policy=no-user-gesture-required", -- sound without a click first
   }
   state.job = vim.fn.jobstart(cmd, {
     on_exit = function()
