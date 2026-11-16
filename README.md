@@ -1,6 +1,6 @@
 # Shredsauce for VS Code and Neovim
 
-Play [Shredsauce](https://shredsauce.com), the snowboarding game, in a VS Code tab or a Neovim floating window.
+Play [Shredsauce](https://shredsauce.com), the snowboarding game, in a VS Code tab, or from Neovim in a game-only window.
 
 ## Install
 
@@ -28,9 +28,9 @@ The game runs from shredsauce.com itself, ads and all, so the developer still ge
 
 ## Neovim
 
-Shows just the game, filling a floating window, drawn as colored text blocks by [Carbonyl](https://github.com/fathyb/carbonyl) (Chromium for the terminal) running in Docker. Blocky, but playable.
+`:Shred` opens the game in its own borderless window next to your terminal, showing only the game, with full speed, keyboard and sound. It uses Chrome, Chromium, Edge or Brave (whichever is installed) with a separate profile, so your normal browser is untouched.
 
-Needs Neovim 0.11+, `curl`, Docker running (Docker Desktop, OrbStack or `colima start`), and a true-color terminal such as Ghostty, Kitty or WezTerm. The first run pulls the `fathyb/carbonyl` image (about 120 MB).
+Needs Neovim 0.11+ and `curl`.
 
 With [lazy.nvim](https://github.com/folke/lazy.nvim):
 
@@ -38,15 +38,16 @@ With [lazy.nvim](https://github.com/folke/lazy.nvim):
 { "ErikBavenstrand/vscode-shredsauce", cmd = { "Shred", "ShredStop" }, opts = {} }
 ```
 
-- `:Shred` opens the game, or hides and shows it again (it keeps running while hidden).
-- `Ctrl-q` hides it from inside the game. `:ShredStop` quits.
-- Click with the mouse; the keyboard goes to the game while the window is focused.
-- Your cookie choice is kept in the Docker volume `shredsauce-carbonyl`.
-- Options (defaults): `width = 0.9`, `height = 0.9`, `border = "rounded"`, `zoom = 100`, `fps = 30`, `hide_key = "<C-q>"`, `devtools_port = 9339`.
+Without a plugin manager:
 
-How it shows only the game: the plugin talks to the browser's DevTools port (bound to localhost) and adds a style that hides the rest of the page.
+```bash
+git clone https://github.com/ErikBavenstrand/vscode-shredsauce ~/.local/share/nvim/site/pack/plugins/start/shredsauce
+```
 
-No sound: the browser runs in a container without audio.
+- `:Shred` opens the game, or brings its window to the front. `:ShredStop` closes it (so does quitting Neovim).
+- Options (defaults): `width = 1280`, `height = 800`, `browser = nil` (auto-detect), `devtools_port = 9339`.
+
+How it shows only the game: the plugin talks to the window's DevTools port (localhost only) and adds a style that hides the rest of the page.
 
 ## Release a new version
 
