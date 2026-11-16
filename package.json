@@ -1,0 +1,108 @@
+{
+  "name": "shredsauce",
+  "displayName": "Shredsauce",
+  "description": "Play Shredsauce, the snowboarding game, right in a VS Code tab.",
+  "version": "1.0.0",
+  "publisher": "erikbavenstrand",
+  "icon": "media/icon.png",
+  "galleryBanner": {
+    "color": "#F0721C",
+    "theme": "dark"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ErikBavenstrand/vscode-shredsauce.git"
+  },
+  "homepage": "https://github.com/ErikBavenstrand/vscode-shredsauce#readme",
+  "bugs": {
+    "url": "https://github.com/ErikBavenstrand/vscode-shredsauce/issues"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "shredsauce",
+    "snowboard",
+    "game",
+    "break"
+  ],
+  "engines": {
+    "vscode": "^1.100.0"
+  },
+  "main": "./extension.js",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "shredsauce.play",
+        "title": "Play",
+        "category": "Shredsauce",
+        "icon": "$(play)"
+      },
+      {
+        "command": "shredsauce.reload",
+        "title": "Reload Game",
+        "category": "Shredsauce",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "shredsauce.showFullPage",
+        "title": "Show Full Page",
+        "category": "Shredsauce",
+        "icon": "$(screen-normal)"
+      },
+      {
+        "command": "shredsauce.showGameOnly",
+        "title": "Show Game Only",
+        "category": "Shredsauce",
+        "icon": "$(screen-full)"
+      },
+      {
+        "command": "shredsauce.openInBrowser",
+        "title": "Open in Browser",
+        "category": "Shredsauce",
+        "icon": "$(link-external)"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "shredsauce.reload",
+          "when": "activeWebviewPanelId == 'shredsauce'",
+          "group": "navigation@1"
+        },
+        {
+          "command": "shredsauce.showFullPage",
+          "when": "activeWebviewPanelId == 'shredsauce' && !shredsauce.fullPage",
+          "group": "navigation@2"
+        },
+        {
+          "command": "shredsauce.showGameOnly",
+          "when": "activeWebviewPanelId == 'shredsauce' && shredsauce.fullPage",
+          "group": "navigation@2"
+        },
+        {
+          "command": "shredsauce.openInBrowser",
+          "when": "activeWebviewPanelId == 'shredsauce'",
+          "group": "navigation@3"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "shredsauce.reload",
+          "when": "shredsauce.open"
+        },
+        {
+          "command": "shredsauce.showFullPage",
+          "when": "shredsauce.open && !shredsauce.fullPage"
+        },
+        {
+          "command": "shredsauce.showGameOnly",
+          "when": "shredsauce.open && shredsauce.fullPage"
+        }
+      ]
+    }
+  }
+}

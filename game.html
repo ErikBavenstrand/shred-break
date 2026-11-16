@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; frame-src https:; img-src {{cspSource}}; style-src 'unsafe-inline'; script-src 'unsafe-inline';">
+<style>
+  html, body { margin: 0; height: 100%; background: #10151d; overflow: hidden; }
+  /* Window onto the game area of the real shredsauce.com page. */
+  #crop { position: absolute; left: 50%; top: 50%; overflow: hidden; transform-origin: 0 0; }
+  #site { position: absolute; border: 0; }
+
+  #splash { position: fixed; inset: 0; z-index: 2; display: grid; place-items: center;
+            background: radial-gradient(ellipse at 50% 35%, #2a3445 0%, #10151d 70%);
+            color: #e8edf3; font: 13px/1.4 system-ui, -apple-system, sans-serif;
+            transition: opacity .5s ease; }
+  #splash.gone { opacity: 0; pointer-events: none; }
+  #splash .box { text-align: center; }
+  #splash img { width: 96px; height: 96px; filter: drop-shadow(0 8px 24px rgba(240,114,28,.35));
+                animation: bob 2.4s ease-in-out infinite; }
+  #splash .title { margin-top: 18px; font-size: 20px; font-weight: 700; letter-spacing: .5px; }
+  #splash .sub { margin-top: 4px; opacity: .6; }
+  #splash .bar { width: 160px; height: 3px; margin: 18px auto 0; border-radius: 2px; overflow: hidden;
+                 background: rgba(255,255,255,.12); }
+  #splash .bar::after { content: ""; display: block; width: 40%; height: 100%; border-radius: 2px;
+                        background: linear-gradient(90deg, #FFB547, #F0721C); animation: slide 1.2s ease-in-out infinite; }
+  @keyframes bob { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-6px) } }
+  @keyframes slide { 0% { transform: translateX(-100%) } 100% { transform: translateX(250%) } }
+</style>
+</head>
+<body>
+<div id="splash"><div class="box">
+  <img src="{{icon}}" alt="">
+  <div class="title">Shredsauce</div>
+  <div class="sub">Waxing the board…</div>
+  <div class="bar"></div>
+</div></div>
+<div id="crop"><iframe id="site" src="https://shredsauce.com/"
+  allow="autoplay; fullscreen; gamepad; clipboard-write"></iframe></div>
+<script>
+  // shredsauce.com lays out its game box from the page width: box = width - 205 px wide, 623 px tall
+  // (inner area, at x=6 y=136), for page widths 945..1310. We pick the page width whose box best
+  // matches the tab's shape, then scale it to fit inside the tab. The frame is taller than the whole page
+  // so the page never scrolls and the box stays put.
+  var PAGE_H = 2400, GAME_X = 6, GAME_Y = 136, GAME_H = 623, MIN_W = 945, MAX_W = 1310;
+
+  var crop = document.getElementById("crop");
+  var site = document.getElementById("site");
+  var splash = document.getElementById("splash");
+  var full = false;
+  site.style.height = PAGE_H + "px";
+
+  function layout() {
+    var W = innerWidth, H = innerHeight;
+    var pageW = Math.max(MIN_W, Math.min(MAX_W, Math.round(W / H * GAME_H) + 205));
+    // Full page: the top of the site. Game: the game box. Both fit inside the tab with their
+    // aspect ratio kept, so nothing is cut off; any leftover space shows as borders.
+    var r = full ? { x: 0, y: 0, w: pageW, h: Math.round(pageW * H / W) }
+                 : { x: GAME_X, y: GAME_Y, w: pageW - 205, h: GAME_H };
+    var s = Math.min(W / r.w, H / r.h);
+    site.style.width = pageW + "px";
+    site.style.left = -r.x + "px";
+    site.style.top = -r.y + "px";
+    crop.style.width = r.w + "px";
+    crop.style.height = r.h + "px";
+    crop.style.transform = "scale(" + s + ") translate(-50%, -50%)";
+  }
+
+  site.addEventListener("load", function () {
+    setTimeout(function () { splash.classList.add("gone"); site.focus(); }, 400);
+  });
+  addEventListener("resize", layout);
+  // Toolbar buttons in the tab title bar send these.
+  addEventListener("message", function (e) {
+    var m = e.data || {};
+    if (m.type === "setFullPage") { full = !!m.value; layout(); site.focus(); }
+    if (m.type === "reload") { splash.classList.remove("gone"); site.src = "https://shredsauce.com/"; }
+  });
+  layout();
+</script>
+</body>
+</html>

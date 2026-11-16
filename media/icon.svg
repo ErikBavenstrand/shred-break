@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFB547"/>
+      <stop offset="1" stop-color="#F0721C"/>
+    </linearGradient>
+    <linearGradient id="snow" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#E3EEF7"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="26" fill="url(#sky)"/>
+  <circle cx="98" cy="30" r="11" fill="#FFF3D6" opacity=".9"/>
+  <!-- back range -->
+  <path d="M0 92 L30 58 L46 74 L70 44 L104 82 L128 64 L128 128 L0 128 Z" fill="#FFFFFF" opacity=".35"/>
+  <!-- slope -->
+  <path d="M0 128 L0 104 C30 92 70 84 128 66 L128 128 Z" fill="url(#snow)"/>
+  <!-- rider -->
+  <g transform="rotate(-18 64 82)">
+    <rect x="30" y="86" width="68" height="9" rx="4.5" fill="#1F2A3A"/>
+    <path d="M52 86 L58 66 L70 66 L76 86" fill="none" stroke="#1F2A3A" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M58 66 L64 46" stroke="#1F2A3A" stroke-width="9" stroke-linecap="round"/>
+    <path d="M48 56 L64 52 L80 46" fill="none" stroke="#1F2A3A" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="66" cy="36" r="7" fill="#1F2A3A"/>
+  </g>
+  <!-- spray -->
+  <circle cx="22" cy="104" r="4" fill="#FFFFFF"/>
+  <circle cx="13" cy="98" r="3" fill="#FFFFFF" opacity=".8"/>
+  <circle cx="8" cy="108" r="2.5" fill="#FFFFFF" opacity=".7"/>
+</svg>
