@@ -7,16 +7,16 @@ Play [Shredsauce](https://shredsauce.com), the snowboarding game, in a VS Code t
 macOS / Linux:
 
 ```bash
-curl -fsSL https://github.com/ErikBavenstrand/vscode-shredsauce/releases/latest/download/shredsauce.vsix -o /tmp/shredsauce.vsix && code --install-extension /tmp/shredsauce.vsix
+curl -fsSL https://github.com/ErikBavenstrand/shred-break/releases/latest/download/shredsauce.vsix -o /tmp/shredsauce.vsix && code --install-extension /tmp/shredsauce.vsix
 ```
 
 Windows (PowerShell):
 
 ```powershell
-iwr https://github.com/ErikBavenstrand/vscode-shredsauce/releases/latest/download/shredsauce.vsix -OutFile $env:TEMP\shredsauce.vsix; code --install-extension $env:TEMP\shredsauce.vsix
+iwr https://github.com/ErikBavenstrand/shred-break/releases/latest/download/shredsauce.vsix -OutFile $env:TEMP\shredsauce.vsix; code --install-extension $env:TEMP\shredsauce.vsix
 ```
 
-Or download `shredsauce.vsix` from [Releases](https://github.com/ErikBavenstrand/vscode-shredsauce/releases) and use **Extensions → ⋯ → Install from VSIX…**. Run the same command again to update.
+Or download `shredsauce.vsix` from [Releases](https://github.com/ErikBavenstrand/shred-break/releases) and use **Extensions → ⋯ → Install from VSIX…**. Run the same command again to update.
 
 ## Use
 
@@ -35,13 +35,13 @@ Needs Neovim 0.11+ and `curl`.
 With [lazy.nvim](https://github.com/folke/lazy.nvim):
 
 ```lua
-{ "ErikBavenstrand/vscode-shredsauce", cmd = { "Shred", "ShredStop" }, opts = {} }
+{ "ErikBavenstrand/shred-break", cmd = { "Shred", "ShredStop" }, opts = {} }
 ```
 
 Without a plugin manager:
 
 ```bash
-git clone https://github.com/ErikBavenstrand/vscode-shredsauce ~/.local/share/nvim/site/pack/plugins/start/shredsauce
+git clone https://github.com/ErikBavenstrand/shred-break ~/.local/share/nvim/site/pack/plugins/start/shredsauce
 ```
 
 - `:Shred` opens the game, or brings its window to the front. `:ShredStop` closes it (so does quitting Neovim).

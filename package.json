@@ -11,11 +11,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ErikBavenstrand/vscode-shredsauce.git"
+    "url": "https://github.com/ErikBavenstrand/shred-break.git"
   },
-  "homepage": "https://github.com/ErikBavenstrand/vscode-shredsauce#readme",
+  "homepage": "https://github.com/ErikBavenstrand/shred-break#readme",
   "bugs": {
-    "url": "https://github.com/ErikBavenstrand/vscode-shredsauce/issues"
+    "url": "https://github.com/ErikBavenstrand/shred-break/issues"
   },
   "categories": [
     "Other"
